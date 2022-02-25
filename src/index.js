@@ -45,15 +45,15 @@ function checksTodoExists(request, response, next) {
     return response.status(404).json({ error: 'User does not exist! '});
   }
 
+  if(!uuidValidate(id, 4)){
+    return response.status(400).json({ error: 'Todo is not a UUID! '});
+  }  
+
   const todo = user.todos.find(todo => todo.id = id);
 
   if(!todo){
     return response.status(404).json({ error: 'Todo not found! '});
   }
-
-  if(!uuidValidate(todo.id, 4)){
-    return response.status(400).json({ error: 'Todo id not a UUID! '});
-  }  
 
   request.user = user;
   request.todo = todo;
